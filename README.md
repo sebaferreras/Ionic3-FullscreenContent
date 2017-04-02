@@ -7,7 +7,7 @@ This demo shows how to hide the header when scrolling down and show it again whe
     <img src="resources/gifs/android.gif" alt="android" width="350">
 </p>
 
-## Ionic View 
+## Ionic View 
 
 Code: **3d962bb7**
 
@@ -40,7 +40,7 @@ Then in your view, just include the header and the content inside the `<fullscre
 </fullscreen-content>
 ```
 
-## Custom options
+## Custom options
 
 You can change the default **tolerance** (scroll tolerance in px before state changes) and **offset** (vertical offset in px before element is first unpinned), the target **headerSelector** and **scrollElementSelector** and the class names used when showing (**headerVisibleClassName**) and hidding (**headerHiddenClassName**) the header.
 
@@ -99,7 +99,7 @@ export class HomePage {
 </fullscreen-content>
 ```
 
-## iOS fix
+## iOS fix
 
 In order to avoid showing the ios status bar with a transparent background, the following styles are added to the `fullscreen-content.component.scss` file:
 
