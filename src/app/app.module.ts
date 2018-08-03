@@ -1,8 +1,13 @@
-// Angular references
+// Angular
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 
-// Ionic references
+// Ionic
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
+// Ionic Native
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 // App
 import { MyApp } from './app.component';
@@ -20,6 +25,7 @@ import { HomePage } from '../pages/home/home';
 		FullscreenContentComponent
 	],
 	imports: [
+		BrowserModule,
 		IonicModule.forRoot(MyApp, {
 			platforms: {
 				ios: {
@@ -34,6 +40,8 @@ import { HomePage } from '../pages/home/home';
 		HomePage
 	],
 	providers: [
+		StatusBar,
+		SplashScreen,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
 	]
 })

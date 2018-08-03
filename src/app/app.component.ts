@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { Platform, Config } from 'ionic-angular';
 
 // Ionic references
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 // Pages
 import { HomePage } from '../pages/home/home';
@@ -14,10 +15,12 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
 	rootPage = HomePage;
 
-	constructor(platform: Platform, private config: Config) {
+	constructor(platform: Platform,
+				statusBar: StatusBar,
+				splashScreen: SplashScreen) {
 		platform.ready().then(() => {
-			StatusBar.styleLightContent();
-			Splashscreen.hide();
+			statusBar.styleLightContent();
+			splashScreen.hide();
 		});
 	}
 }

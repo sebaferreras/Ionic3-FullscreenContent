@@ -1,6 +1,7 @@
 {
   "name": "fullscreencontent",
-  "app_id": "057918ab",
+  "integrations": {},
   "v2": true,
-  "typescript": true
+  "typescript": true,
+  "pro_id": "057918ab"
 }
