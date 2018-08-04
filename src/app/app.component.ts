@@ -1,10 +1,12 @@
-// Angular references
+// Angular
 import { Component } from '@angular/core';
-import { Platform, Config } from 'ionic-angular';
 
-// Ionic references
-import { SplashScreen } from '@ionic-native/splash-screen';
+// Ionic
+import { Platform } from 'ionic-angular';
+
+// Ionic Native
 import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 // Pages
 import { HomePage } from '../pages/home/home';
@@ -20,6 +22,12 @@ export class MyApp {
 				splashScreen: SplashScreen) {
 		platform.ready().then(() => {
 			statusBar.styleLightContent();
+
+			if (platform.is('ios')) {
+				statusBar.overlaysWebView(false);
+				statusBar.backgroundColorByHexString('#387ef5');
+			}
+
 			splashScreen.hide();
 		});
 	}

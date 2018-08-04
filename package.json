@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "fullscreen-content",
+  "author": "Sebastian Ferreras",
+  "homepage": "http://www.flioh.com/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -22,7 +22,15 @@
     "@ionic-native/splash-screen": "3.10.2",
     "@ionic-native/status-bar": "3.10.2",
     "@ionic/storage": "2.1.3",
+    "cordova-android": "6.3.0",
+    "cordova-ios": "4.5.4",
+    "cordova-plugin-device": "1.1.4",
+    "cordova-plugin-ionic-webview": "^1.2.1",
+    "cordova-plugin-splashscreen": "~4.0.1",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "1.3.1",
     "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "~2.2.1",
     "ionicons": "3.0.0",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
@@ -48,5 +56,19 @@
       "locator": "ios"
     }
   ],
-  "description": "headRoomDemo: An Ionic project"
+  "description": "Ionic 3 demo of how to hide the header when scrolling down and show it again when scrolling up.",
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios"
+    ],
+    "plugins": {
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-statusbar": {}
+    }
+  }
 }

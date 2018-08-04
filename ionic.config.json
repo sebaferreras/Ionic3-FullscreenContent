@@ -1,6 +1,8 @@
 {
   "name": "fullscreencontent",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "v2": true,
   "typescript": true,
   "pro_id": "057918ab"

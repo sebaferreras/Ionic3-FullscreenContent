@@ -1,8 +1,8 @@
-// Angular references
+// Angular
 import { Component } from '@angular/core';
 
-// Fullscreen content model
-import { FullScreenContentConfig } from '../../components/full-screen-content/fullscreen-content.component';
+// Fullscreen content settings
+import { FullScreenContentSettings } from '../../components/full-screen-content/models/full-screen-content-settings';
 
 @Component({
 	selector: 'page-home',
@@ -10,15 +10,10 @@ import { FullScreenContentConfig } from '../../components/full-screen-content/fu
 })
 export class HomePage {
 
-	// Config object
-	public config: FullScreenContentConfig;
+	public customSettings: FullScreenContentSettings = {
+		tolerance: 10,
+		offset: 250
+	};
 
-	constructor() {
-
-		// Custom Config
-		this.config = {
-			tolerance: 10,
-			offset : 250
-		};
-	}
+	constructor() { }
 }

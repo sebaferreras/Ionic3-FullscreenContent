@@ -1,123 +1,167 @@
 # Fullscreen Content demo [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-This demo shows how to hide the header when scrolling down and show it again when scrolling up.
+Ionic 3 demo of how to hide the header when scrolling down and show it again when scrolling up.
 
 <p>
     <img src="resources/gifs/ios.gif" alt="ios" width="350">
     <img src="resources/gifs/android.gif" alt="android" width="350">
 </p>
 
-## Ionic View 
+# Table of contents
 
-Code: **3d962bb7**
+* [Ionic info](#ionic-info)
+* [Running the demo](#running-the-demo)
+* [Using the component in your projects](#using-the-component-in-your-projects)
+* [Settings](#settings)
+* [Changelog](#changelog)
+* [Contribution](#contribution)
+* [Support this project](#support-this-project)
 
-You can check this project out by using Ionic View with the code above. 
-Please note that there may be some issues related to the status bar on iOS when taking a look at the app using Ionic View.
+# Ionic info
+
+```
+Ionic:
+
+   ionic (Ionic CLI)  : 4.0.1 (/usr/local/lib/node_modules/ionic)
+   Ionic Framework    : ionic-angular 3.9.2
+   @ionic/app-scripts : 3.1.11
+
+Cordova:
+
+   cordova (Cordova CLI) : 7.1.0
+   Cordova Platforms     : android 6.3.0, ios 4.5.4
+
+System:
+
+   Android SDK Tools : 26.1.1
+   ios-deploy        : 1.9.2
+   ios-sim           : 5.1.0
+   NodeJS            : v8.11.1 (/usr/local/bin/node)
+   npm               : 5.10.0
+   OS                : macOS High Sierra
+   Xcode             : Xcode 9.4.1 Build version 9F2000
+```
 
 ## Running the demo
 
-Inside of the project folder, run `npm install` and then `ionic serve --lab` to run the demo in the browser.
+Inside of the project folder, run `npm install` and then to run the demo in the browser `ionic serve [-t android/ios]`
 
 ## Using the component in your projects
 
 Just copy the `full-screen-content` folder (inculding the html, ts and scss files) in your project. Then include the `FullscreenContentComponent` in the `declarations` array from your `@NgModule`.
 
-Then in your view, just include the header and the content inside the `<fullscreen-content></fullscreen-content>` tags, and add the `content-type="header"` attribute to the header and the `content-type="body"` attribute to the body.
+Then in your view, just include the header and the content inside the `<fullscreen-content></fullscreen-content>` tags and add the `#target` template variable to the header
 
 ```
 <fullscreen-content>
 
-	<!-- You need to include the content-type="header" attribute to your header -->
-	<ion-header content-type="header">
-		<!-- ... -->
-	</ion-header>
+    <ion-header #target>
+        ...
+    </ion-header>
 
-	<!-- You need to include the content-type="body" attribute to your header -->
-	<ion-content content-type="body">
-        <!-- ... -->
+    <ion-content>
+        ...
     </ion-content>
 
 </fullscreen-content>
 ```
 
-## Custom options
+**Important**
 
-You can change the default **tolerance** (scroll tolerance in px before state changes) and **offset** (vertical offset in px before element is first unpinned), the target **headerSelector** and **scrollElementSelector** and the class names used when showing (**headerVisibleClassName**) and hidding (**headerHiddenClassName**) the header.
+When using the component on iOS, please make sure to:
 
-The config should be an object of the `FullScreenContentConfig` type:
+1) Install the [Web View plugin for Cordova that is specialized for Ionic apps](https://github.com/ionic-team/cordova-plugin-ionic-webview#installation-instructions).
+2) Configure the `StatusBar` cordova plugin setting the `overlaysWebView` to be `false`, and the `backgroundColorByHexString` to be the same color of your header. For example if your header's color is `#387ef5` (Ionic's default primary color):
 
 ```
-// Configuration interface
-export class FullScreenContentConfig {
-    public tolerance?: number = 1;
-    public offset?: number = 250;
+// Ionic Native
+import { StatusBar } from '@ionic-native/status-bar';
 
-    // Elements selectors
-    public headerSelector?: string = 'header';
-    public scrollElementSelector?: string = 'scroll-content';
+// Pages
+import { HomePage } from '../pages/home/home';
 
-    // Css classes
-    public headerVisibleClassName?: string = 'header--visible';
-    public headerHiddenClassName?: string = 'header--hidden';
+@Component({
+    templateUrl: 'app.html'
+})
+export class MyApp {
+
+    // ...
+
+    constructor(platform: Platform, statusBar: StatusBar) {
+
+        platform.ready().then(() => {
+
+            statusBar.styleLightContent();
+
+            if (platform.is('ios')) {
+                statusBar.overlaysWebView(false);                // <--- Here!
+                statusBar.backgroundColorByHexString('#387ef5'); // <--- And here!
+            }
+
+            // ...
+        });
+    }
 }
 ```
 
-You can override some of the properties:
+## Settings
+
+The component also defines the `FullScreenContentSettings` interface, to customize the behaviour of the component.
 
 ```
-// Angular references
-import { Component } from '@angular/core';
+export interface FullScreenContentSettings {
+    tolerance?: number;
+    offset?: number;
+    headerVisibleClassName?: string;
+    headerHiddenClassName?: string;
+}
+```
 
-// Fullscreen content model
-import { FullScreenContentConfig } from '../../components/full-screen-content/fullscreen-content.component';
+The settings should be sent to the component using the `settings` property:
+
+```
+// Fullscreen content settings
+import { FullScreenContentSettings } from '../path/to/component/models/full-screen-content-settings';
 
 @Component({
-	selector: 'page-home',
-	templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html'
 })
 export class HomePage {
 
-	// Config object
-	public config: FullScreenContentConfig;
+    public customSettings: FullScreenContentSettings = {
+        tolerance: 10,
+        offset: 250
+    };
 
-	constructor() {
-
-		// Custom Config
-		this.config = {
-			tolerance: 10,
-			offset : 250
-		};
-	}
+    // ...
 }
 ```
 
-... and send the config object to the component:
+And in the view:
 
 ```
-<fullscreen-content [config]="config">
-    <!-- ... -->
+<fullscreen-content [settings]="customSettings">
+    ...
 </fullscreen-content>
 ```
 
-## iOS fix
+You can change the default **tolerance** () and **offset** () and the class names used when showing (**headerVisibleClassName**) and hidding (**headerHiddenClassName**) the header.
 
-In order to avoid showing the ios status bar with a transparent background, the following styles are added to the `fullscreen-content.component.scss` file:
+Param | Type | Description | Default value
+--- | --- | ---| ---
+`tolerance` | `number` | **Optional**. Scroll tolerance in `px` before state changes | `10`
+`offset` | `number` | **Optional**. Vertical offset in `px` before element is first unpinned | `250`
+`headerVisibleClassName` | `string` | **Optional**. Name of the class used to show the header | `header--visible`
+`headerHiddenClassName` | `string` | **Optional**. Name of the class used to hide the header | `header--hidden`
 
-```
-// Used to avoid showing the statusbar with a transparent background
-// ------------------------------------------------------------------
-.ios {
-    ion-header {
-        padding-top: 20px;
-    }
-    .ios-status-bg {
-        position: absolute;
-        width: 100%;
-        height: 20px;
-        top: 0;
-        left: 0;
-        z-index: 99;
-        background-color: map-get($colors, primary);
-    } 
-}
-```
+# Changelog
+
+ * **04/08/2018** Updated dependencies to use the latest Ionic 3 version. Improved internal logic to avoid accessing the DOM directly
+
+ # Contribution
+- Having an **issue** or looking for **support**? [Open an issue](https://github.com/sebaferreras/Ionic3-FullscreenContent/issues/new) and I'll do my best to help you out.
+- Got a **new feature or a bug fix**? Fork the repo, make your changes, and submit a pull request.
+
+# Support this project
+If you find this project useful, please star the repo to let people know that it's reliable. Also, share it with friends and colleagues that might find this useful as well. Thank you! :)
