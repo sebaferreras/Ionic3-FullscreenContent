@@ -48,7 +48,7 @@ Inside of the project folder, run `npm install` and then to run the demo in the 
 
 ## Using the component in your projects
 
-Just copy the `full-screen-content` folder (inculding the html, ts and scss files) in your project. Then include the `FullscreenContentComponent` in the `declarations` array from your `@NgModule`.
+Just copy the `full-screen-content` folder (inculding the html, ts and scss files) in your project, and include the `FullscreenContentComponent` in the `declarations` array from your `@NgModule`.
 
 Then in your view, just include the header and the content inside the `<fullscreen-content></fullscreen-content>` tags and add the `#target` template variable to the header
 
